@@ -1,70 +1,68 @@
-const form = document.getElementById("guest-form");
-const guestList = document.getElementById("guest-list");
-const guestInput = document.getElementById("guest-name");
-const categoryInput = document.getElementById("guest-category");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("guest-form");
+  const guestList = document.getElementById("guest-list");
+  const guestNameInput = document.getElementById("guest-name");
+  const guestCategorySelect = document.getElementById("guest-category");
 
-let guestCount = 0;
-const maxGuests = 10;
+  let guestCount = 0;
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  if (guestCount >= maxGuests) {
-    alert("Guest limit reached (10 guests max)");
-    return;
-  }
-
-  const name = guestInput.value.trim();
-  const category = categoryInput.value;
-
-  if (name === "") return;
-
-  const listItem = document.createElement("li");
-  listItem.classList.add(`category-${category}`);
-
-  const guestInfo = document.createElement("span");
-  guestInfo.textContent = `${name} (${category}) - Attending`;
-  
-  const timestamp = document.createElement("small");
-  const timeAdded = new Date().toLocaleTimeString();
-  timestamp.textContent = ` [Added at ${timeAdded}]`;
-
-  const rsvpBtn = document.createElement("button");
-  rsvpBtn.textContent = "Toggle RSVP";
-  rsvpBtn.addEventListener("click", () => {
-    if (guestInfo.textContent.includes("Attending")) {
-      guestInfo.textContent = `${name} (${category}) - Not Attending`;
-    } else {
-      guestInfo.textContent = `${name} (${category}) - Attending`;
+    if (guestCount >= 10) {
+      alert("Guest limit reached (10). Remove a guest to add more.");
+      return;
     }
-    guestInfo.appendChild(timestamp);
+
+    const name = guestNameInput.value.trim();
+    const category = guestCategorySelect.value;
+    if (!name) return;
+
+    const guestItem = document.createElement("li");
+    const timeAdded = new Date().toLocaleTimeString();
+
+    guestItem.innerHTML = `
+      <strong>${name}</strong> 
+      <span class="category-${category}">${category}</span> 
+      <span class="timestamp">🕒 ${timeAdded}</span> 
+      <span class="rsvp">Attending</span>
+      <button class="action rsvp-btn">Toggle RSVP</button>
+      <button class="action edit-btn">Edit</button>
+      <button class="action delete-btn">Remove</button>
+    `;
+
+    guestList.appendChild(guestItem);
+    guestCount++;
+
+    guestNameInput.value = "";
+
+    // RSVP Toggle
+    const rsvpBtn = guestItem.querySelector(".rsvp-btn");
+    const rsvpSpan = guestItem.querySelector(".rsvp");
+    rsvpBtn.addEventListener("click", () => {
+      if (rsvpSpan.textContent === "Attending") {
+        rsvpSpan.textContent = "Not Attending";
+        rsvpSpan.classList.add("not-attending");
+      } else {
+        rsvpSpan.textContent = "Attending";
+        rsvpSpan.classList.remove("not-attending");
+      }
+    });
+
+    // Edit Name
+    const editBtn = guestItem.querySelector(".edit-btn");
+    editBtn.addEventListener("click", () => {
+      const newName = prompt("Enter new guest name:");
+      if (newName) {
+        guestItem.querySelector("strong").textContent = newName;
+      }
+    });
+
+    // Delete Guest
+    const deleteBtn = guestItem.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", () => {
+      guestItem.remove();
+      guestCount--;
+    });
   });
-
-  const editBtn = document.createElement("button");
-  editBtn.textContent = "Edit";
-  editBtn.addEventListener("click", () => {
-    const newName = prompt("Edit guest name:", name);
-    if (newName) {
-      guestInfo.textContent = `${newName} (${category}) - Attending`;
-      guestInfo.appendChild(timestamp);
-    }
-  });
-
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "Remove";
-  removeBtn.addEventListener("click", () => {
-    guestList.removeChild(listItem);
-    guestCount--;
-  });
-
-  listItem.appendChild(guestInfo);
-  listItem.appendChild(timestamp);
-  listItem.appendChild(rsvpBtn);
-  listItem.appendChild(editBtn);
-  listItem.appendChild(removeBtn);
-
-  guestList.appendChild(listItem);
-
-  guestInput.value = "";
-  guestCount++;
 });

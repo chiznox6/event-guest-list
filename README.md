@@ -49,6 +49,6 @@ You can host this using GitHub Pages or Netlify. Once deployed, paste your link 
 git clone https://github.com/chiznox6/event-guest-list.git
 
 # Navigate to the project
-cd guest-list-app
+cd event-guest-list
 
 # Open index.html in your browser
