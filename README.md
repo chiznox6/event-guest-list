@@ -40,13 +40,13 @@ event-guest-list-app/
 
 You can host this using GitHub Pages or Netlify. Once deployed, paste your link here:
 
-[Live Demo](https://yourusername.github.io/guest-list-app)
+[Live Demo]https://github.com/chiznox6/event-guest-list.git
 
 ## 📦 How to Run Locally
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/guest-list-app.git
+git clone https://github.com/chiznox6/event-guest-list.git
 
 # Navigate to the project
 cd guest-list-app
