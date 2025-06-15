@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #e6f7ff;
+  border-left: 6px solid #1890ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-Friend {
+  border-color: green;
+}
+
+.category-Family {
+  border-color: blue;
+}
+
+.category-Colleague {
+  border-color: purple;
+}
+
+button {
+  margin-left: 10px;
+}
